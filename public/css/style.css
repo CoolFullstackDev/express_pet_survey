@@ -1,3 +1,4 @@
+/* error style */
 .alert-error{
   color: #a94442;
   background-color: #f2dede;
@@ -10,6 +11,14 @@
   border-color: #d6e9c6;
 }
 
+/* census result svg style */
+
+text {
+  font: 10px sans-serif;
+}
+
+
+/* site style */
 .clear{
   clear: both;
 }
@@ -234,21 +243,29 @@ img.question_area.reverse_image{
   left: 100px;
 }
 
-.breed_bubble{
+#breed_bubble{
   width: 600px;
   height: 600px;
   background: white;
   margin-left: -25px;
 }
 
-.word_chart{
+#word_chart{
   width: 630px;
   height: 500px;
   margin-left: 60px;
   background: white;
 }
 
+#world_map{
+  width: 600px;
+  height: 600px;
+  background: white;
+  margin-left: -25px;
+}
+
 .individual_response{
   font-size: 35px;
 }
+
 
