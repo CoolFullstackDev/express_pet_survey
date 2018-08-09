@@ -1,0 +1,24 @@
+extends first
+
+block census_result
+  #census_result
+    br
+    br
+    .row
+      p#census_result_title.text-center CENSUS RESULTS
+      br
+    .row
+      .col-md-offset-1.col-md-10
+        p#census_result_string To date 1,234 people from all over the world have responded to the survey and expressed gratitude for a non-human animal...
+    br
+    br
+    .row
+      .col-xs-offset-1.col-xs-1
+        p#big_curly_brackets {
+      .col-xs-offset-1.col-xs-6.text-center
+        p#recommend_vote_string To view the census results, please participate by taking the survey above.
+        span.show_result or   
+        a.show_result(href="/show") click here.
+      .col-xs-offset-1.col-xs-1
+        p#big_curly_brackets }
+

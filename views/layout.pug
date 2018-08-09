@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    title Animal Census
+    link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet' href='/css/style.css')
+  body
+    .container-fluid
+      .row.nav_area
+        #logo.col-md-offset-1.col-md-2
+          img(src='/images/logo-top.gif')
+        .col-md-offset-1.col-md-2.main_nav_link
+          a(href="#invitation_area") INVITATION
+        .col-md-2.main_nav_link
+          a(href="#take_survey") TAKE THE SURVEY
+        .col-md-2.main_nav_link
+          a(href="#census_result") CENSUS RESULTS
+        .col-md-2.main_nav_link
+          a(href="#about_us") ABOUT US
+    
+    .container-fluid
+      != messages('message', locals)
+      if errors
+        each error, i in errors
+          div(class="alert alert-danger") #{error.msg}
+      block content
+      br
+      br
+      footer
+        .row
+          .col-md-offset-1.col-md-3
+            p.footer_text Thank The Animals Census
+            p.footer_text 268 Bush St., #3024
+            p.footer_text San Francisco, CA 94104 USA
+            p.footer_text <a href="mailto:#">thanktheanimalscensus@gmail.com</a>
+          .col-md-4
+            .bottom_social_area
+              p#follow_us Follow us:
+              
+
+          img.col-md-3(src="images/logo-bottom.gif")
+        .row
+          .col-md-offset-1.col-md-10
+            p#copyright 2018 Thank the Animals Census. All rights reserved. | Privacy Policy
+
+    script(src='/bower_components/jquery/dist/jquery.js')  
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='/js/main.js')  

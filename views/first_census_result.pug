@@ -1,0 +1,48 @@
+extends first
+
+block census_result
+  #census_result
+    br
+    br
+    .row
+      p#census_result_title.text-center CENSUS RESULTS
+      br
+    .row
+      .col-md-offset-1.col-md-10
+        p#census_result_string To date 1,234 people from all over the world have responded to the survey and expressed gratitude for a non-human animal. Generalizations from this data are charted below, individual responses can be viewed below the charts.
+    
+    .row.census_area
+      .col-md-6
+        .row.position_relative
+          img.question_area.col-xs-offset-1.col-xs-11(src="images/arrow.gif")
+          p.position_absolute.question_title QUESTION
+          p.position_absolute.question_content What is your animal's breed?
+      .col-md-6
+        .breed_bubble
+
+    .row.census_area
+      .col-md-6
+        .word_chart
+      .col-md-6
+        .row.position_relative
+          img.question_area.reverse_image.col-xs-offset-1.col-xs-11(src="images/arrow.gif")
+          p.position_absolute.question_title QUESTION
+          p.position_absolute.question_content What do you want to thank <br> your animal for?
+
+    .row.census_area
+      .col-md-6
+        .row.position_relative
+          img.question_area.col-xs-offset-1.col-xs-11(src="images/arrow.gif")
+          p.position_absolute.question_title QUESTION
+          p.position_absolute.question_content Where are you from?
+      .col-md-6
+        .breed_bubble
+    br
+    br
+    br
+    br
+    br
+    #animal_image.row
+      p.individual_response.text-center To view an individual response, click on a photo below...
+      img#img_grid.col-md-offset-1.col-md-10(src="images/survey-grid.jpg")
+      

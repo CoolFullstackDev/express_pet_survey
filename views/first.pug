@@ -1,0 +1,103 @@
+extends layout
+
+block content
+  .row
+    img.col-md-12(src='/images/splash.jpg')
+  #invitation_area.row
+    #invitation.col-md-offset-1.col-md-10
+      p#invitation_title.text-center AN INVITATION
+      .row
+        #invitation_content.col-md-offset-1.col-md-10
+          br
+          br
+          p We invite you to join the Census of Gratitude and Thanks.
+          br
+          br
+          p Humans are domesticated animals. This Census concerns non-human animals. Transcending divisions, language, religions and politics... Animals don't complain. Have you ever loved an animal, or become a better huiman being becuase of your relationship with an animal? Has an animal touched you, changed your life, taught you something, kept you safe, healed you? 
+          br
+          br
+          p To honor and celebrate all those non-human animals who touch us so deeply, please let us remember to pass on their simple message in whatever way we can. Love and kindness, given freely with nothing asked in return, is all there is.
+          br
+          br
+  br
+  br
+  #take_survey
+    div
+      p#take_survey_title.text-center TAKE THE SURVEY...
+    div
+    #survey_form
+      p.take_survey_subtitle.text-center The <i>Thank The Animals Census</i> is free to anyone.
+      p.take_survey_subtitle.text-center Just fill in the questions below and click "Add My Response!"
+      br
+      form(method="post", url="/add", enctype="multipart/formdata")
+        .row
+          .row.col-md-6.md-xs-12
+            .col-md-offset-3.col-md-8
+              .row
+                p.form_label Your Name(or Pseudonym)
+                input.form_input(type="text", name="name")
+              br
+              .row
+                .row.col-md-6
+                  p.form_label Animal's Name
+                  input.form_input(type="text", name="animal")
+                  
+                .col-md-6
+                  p.form_label Breed
+                  input.form_input(type="text", name="breed")
+              br
+              .row
+                p.form_label Country
+                input.form_input(type="text", name="country")
+          .col-md-6.md-xs-12
+            .row
+              .col-md-offset-1.col-md-8
+                p.form_label What do you want to thank your animal for?
+                textarea.form_input(name="comment", placeholder="(ie: companionship, love, wisdom, fun, playfulness, teachings, etc)")
+            br
+            .row
+              .col-md-offset-1.col-md-8
+                p.form_label Upload a photo of your animal-friend(optional)
+                input.form_input(type="file", name="photo")
+        br
+        br
+        .row
+          .col-md-offset-4.col-md-4.col-xs-offset-3.col-xs-6
+            input#btn_submit.text-center(type="submit", value="ADD MY RESPONSE!")
+          img.col-md-offset-1.col-md-2.col-xs-offset-1.col-xs-2(src="/images/logo-survey.gif")
+
+  block census_result
+
+  #about_us
+    p#about_us_title.text-center WHO WE ARE
+    .row
+      .col-md-offset-1.col-md-5
+        p.about_us_content Thank the Animals Census is operated by a few indivisuals who believe animals deserve appreciation and love from their human neighbors. This site is non-commercial, intended to be a public service.
+        br
+        br
+        p.about_us_content If you are interested in joining or partnering with Thank the Animals Census, please contact Elsa Lambert at <a href="mailto:#">thanktheanimalscensus@gmail.com</a>.
+
+      img.col-md-5(src="/images/about-etching.jpg")
+    .clear
+  .row
+    p#partners_title.text-center PARTNERS
+    .row
+      .col-md-offset-1.col-md-4
+        .row.text-center
+          .col-md-12
+            img(src="images/logo-thecouncil.gif")
+            br
+            a.site_link(href="http://www.thecouncilseries.com") www.thecouncilseries.com
+      .col-md-offset-2.col-md-4
+        .row.text-center
+          .col-md-12
+            img(src="images/logo-app.gif")
+            br
+            a.site_link(href="http://www.animalwisdom-app.com") www.animalwisdom-app.com  
+
+
+  
+    
+
+        
+        
