@@ -3,8 +3,13 @@ html
   head
     title Animal Census
     link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
-    link(rel="https://www.amcharts.com/lib/3/plugins/export/export.css")
     link(rel='stylesheet' href='/css/style.css')
+    link(rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css")
+
+    block head
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js")
+      script(src='/js/main.js')
+      
   body
     .container-fluid
       .row.nav_area
@@ -20,10 +25,7 @@ html
           a(href="#about_us") ABOUT US
     
     .container-fluid
-      != messages('message', locals)
-      if errors
-        each error, i in errors
-          div(class="alert alert-danger") #{error.msg}
+
       block content
       br
       br
@@ -44,16 +46,9 @@ html
           .col-md-offset-1.col-md-10
             p#copyright 2018 Thank the Animals Census. All rights reserved. | Privacy Policy
 
-    script(src='/bower_components/jquery/dist/jquery.js')  
-    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
-    script(src="http://d3js.org/d3.v3.min.js") 
 
-    script(src="https://www.amcharts.com/lib/3/ammap.js")
-    script(src="https://www.amcharts.com/lib/3/maps/js/worldLow.js")
-    script(src="https://www.amcharts.com/lib/3/plugins/export/export.min.js")
-    script(src="https://www.amcharts.com/lib/3/themes/light.js")
+
+
+ 
     
-    script(src='/js/map.js')
-    script(src='/js/main.js')  
-    script(src='/js/cloud.js')
     

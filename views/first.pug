@@ -1,4 +1,7 @@
-extends layout
+extends layout.pug
+
+block append head
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js")
 
 block content
   .row
@@ -44,14 +47,44 @@ block content
                   
                 .col-md-6
                   p.form_label Breed
-                  input.form_input(type="text", name="breed")
+                  .ui.selection.search.dropdown
+                    input(name='tags', type='hidden')
+                    .default.text Select
+                    i.dropdown.icon
+                    .menu
+                      .item(data-value='angular') Angular
+                      .item(data-value='css') CSS
+                      .item(data-value='design') Graphic Design
+                      .item(data-value='ember') Ember
+                      .item(data-value='html') HTML
+                      .item(data-value='ia') Information Architecture
+                      .item(data-value='javascript') Javascript
+                      .item(data-value='mech') Mechanical Engineering
+                      .item(data-value='meteor') Meteor
+                      .item(data-value='node') NodeJS
+                      .item(data-value='plumbing') Plumbing
+                      .item(data-value='python') Python
+                      .item(data-value='rails') Rails
+                      .item(data-value='react') React
+                      .item(data-value='repair') Kitchen Repair
+                      .item(data-value='ruby') Ruby
+                      .item(data-value='ui') UI Design
+                      .item(data-value='ux') User Experience
+
+
+
+
+                  //- select(name='dropDown', id='')
+                  //-   each breed in breeds
+                  //-       option=breed
+
               br
               .row
                 p.form_label Country
                 input.form_input(type="text", name="country")
           .col-md-6.md-xs-12
             .row
-              .col-md-offset-1.col-md-8
+              .col-md-offset-1.col-md-8 //- script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
                 p.form_label What do you want to thank your animal for?
                 textarea.form_input(name="comment", placeholder="(ie: companionship, love, wisdom, fun, playfulness, teachings, etc)")
             br
@@ -95,9 +128,4 @@ block content
             br
             a.site_link(href="http://www.animalwisdom-app.com") www.animalwisdom-app.com  
 
-
-  
-    
-
-        
         

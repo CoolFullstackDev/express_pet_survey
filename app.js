@@ -2,9 +2,6 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
-const flash = require('connect-flash');
-const session = require('express-session');
-const passport = require('passport');
 
 // Init App
 const app = express();
@@ -17,19 +14,13 @@ app.set('view engine', 'pug');
 // Body Parser Middleware
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
+
 // parse application/json
 app.use(bodyParser.json());
 
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(__dirname + 'public/images'));
-
-// Express Session Middleware
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}));
 
 // Express Messages Middleware
 app.use(require('connect-flash')());
