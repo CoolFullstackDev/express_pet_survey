@@ -47,36 +47,9 @@ block content
                   
                 .col-md-6
                   p.form_label Breed
-                  .ui.selection.search.dropdown
-                    input(name='tags', type='hidden')
-                    .default.text Select
-                    i.dropdown.icon
-                    .menu
-                      .item(data-value='angular') Angular
-                      .item(data-value='css') CSS
-                      .item(data-value='design') Graphic Design
-                      .item(data-value='ember') Ember
-                      .item(data-value='html') HTML
-                      .item(data-value='ia') Information Architecture
-                      .item(data-value='javascript') Javascript
-                      .item(data-value='mech') Mechanical Engineering
-                      .item(data-value='meteor') Meteor
-                      .item(data-value='node') NodeJS
-                      .item(data-value='plumbing') Plumbing
-                      .item(data-value='python') Python
-                      .item(data-value='rails') Rails
-                      .item(data-value='react') React
-                      .item(data-value='repair') Kitchen Repair
-                      .item(data-value='ruby') Ruby
-                      .item(data-value='ui') UI Design
-                      .item(data-value='ux') User Experience
-
-
-
-
-                  //- select(name='dropDown', id='')
-                  //-   each breed in breeds
-                  //-       option=breed
+                  select.ui.search.dropdown(name="breed")
+                    each breed in breeds
+                      option=breed
 
               br
               .row
