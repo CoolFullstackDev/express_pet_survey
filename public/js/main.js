@@ -1,19 +1,51 @@
 $(document).ready(function(){
 
-  //show breed dropdown
-  $('.ui.dropdown').dropdown();
+  //show breed, country dropdown
 
-  // $('.ui.dropdown').dropdown({
-  //   onChange: function (value, text, $selectedItem) {
-  //     console.log(value);
-  //   },
-  //   forceSelection: false, 
-  //   selectOnKeydown: false, 
-  //   showOnFocus: false,
-  //   on: "hover" 
+  $('#breed_dropdown').dropdown({
+    onChange: function (value, text, $selectedItem) {
+      console.log(value);
+      $("#breed_data").val(value);
+    },
+    forceSelection: false, 
+    selectOnKeydown: false, 
+    showOnFocus: false,
+    on: "hover" 
+  });
+
+  $('#country_dropdown').dropdown({
+    onChange: function (value, text, $selectedItem) {
+      console.log(value);
+      $("#country_data").val(value);
+    },
+    forceSelection: false, 
+    selectOnKeydown: false, 
+    showOnFocus: false,
+    on: "hover" 
+  });
+  
+  
+  // //survey form submit
+  // $("#btn_submit").click(function(){
+
+  //   var name = $("#form_name").val();
+
+  //   $.post({
+  //     type: "POST",
+  //     url: "./add",
+  //     data: {input: name},
+  //     timeout: 2 * 60 * 1000,
+  //     success: function(data){
+  //       if(data){
+  //         console.log("success: " + data);
+  //       }
+  //     }
+  //   });
+
   // });
 
-  
+
+
   //show bubble chart for breed
   breed_bubble();
 
@@ -44,7 +76,7 @@ $(document).ready(function(){
         .style("font", "12px sans-serif")
         .text("tooltip");
 
-    d3.json("http://localhost:3000/cronjob/bubble/2018-08-11.json", function(error, root) {
+    d3.json("http://localhost:3000/cronjob/bubble/2018-08-12.json", function(error, root) {
       var node = svg.selectAll(".node")
           .data(bubble.nodes(classes(root))
           .filter(function(d) { return !d.children; }))
@@ -90,7 +122,7 @@ $(document).ready(function(){
 
   //show word char for comment 
   
-  $.getJSON('http://localhost:3000/cronjob/word/2018-08-11.json', function (data) {
+  $.getJSON('http://localhost:3000/cronjob/word/2018-08-12.json', function (data) {
 
     var text_string = data['data'];
 

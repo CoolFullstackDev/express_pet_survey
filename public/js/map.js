@@ -244,7 +244,7 @@
 
         console.log("in map.js, before json parsing");
 
-        $.getJSON('http://localhost:3000/cronjob/map/2018-08-11.json', function (data) {
+        $.getJSON('http://localhost:3000/cronjob/map/2018-08-12.json', function (data) {
 
             var mapData = data['data'];
 

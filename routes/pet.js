@@ -1,13 +1,14 @@
-const express = require('express')
-const router = express.Router()
-const mysql = require('mysql')
+const express = require('express');
+const router = express.Router();
+const mysql = require('mysql');
+
 
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '123',
     database: 'census'
-})
+});
 
 //show simple first page
 router.get('/', (req, res) => {
@@ -27,7 +28,7 @@ router.get('/', (req, res) => {
             var country_json_data = json_data['data'];
             var country_data = [];
 
-            for(var i = 0; i < country_json_data.length; i++){
+            for (var i = 0; i < country_json_data.length; i++) {
                 country_data[i] = country_json_data[i]['name'];
             }
 
@@ -40,7 +41,7 @@ router.get('/', (req, res) => {
 
     });
 
-})
+});
 
 //get json data and show census result
 router.get('/show', (req, res) => {
@@ -59,7 +60,7 @@ router.get('/show', (req, res) => {
             var country_json_data = json_data['data'];
             var country_data = [];
 
-            for(var i = 0; i < country_json_data.length; i++){
+            for (var i = 0; i < country_json_data.length; i++) {
                 country_data[i] = country_json_data[i]['name'];
             }
 
@@ -71,45 +72,70 @@ router.get('/show', (req, res) => {
         });
 
     });
-})
+});
+
 
 //get json data and show census result
-router.get('/add', (req, res) => {
-    const name = req.body.name;
-    const email = req.body.email;
-    const animal_name = req.body.animal_name;
-    const breed = req.body.breed;
-    const country = req.body.country;
-    const comment = req.body.comment;
+router.post('/add', function (req, res) {
 
-    req.checkBody('name', 'Name is required').notEmpty();
-    req.checkBody('email', 'Email is required').notEmpty();
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('animal_name', "Animal's name is required").notEmpty();
-    req.checkBody('breed', 'Breed is required').notEmpty();
-    req.checkBody('country', 'Country is required').notEmpty();
-    req.checkBody('comment', "Comment is required").notEmpty();
+    let name = req.body.username;
+    // let email = req.body.email;
+    let email = "a@b.com";
+    let animal_name = req.body.animal_name;
+    let breed = req.body.breed_data;
+    let country = req.body.country_data;
+    let comment = req.body.comment;
+    let photo_path = "";
+    let thumbnail_path = "";
 
-    let errors = req.validationErrors();
 
-    if (errors) {
-        res.render('/', {
-            errors: errors
-        });
-    } else {
-        var cur_date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+    console.log("name: " + name + ", animal: " + animal_name + ", breed: " + breed + ", country: " + country + ", comment: " + comment);
 
-        var poll_record = [
-            [name, email, animal_name, breed, country, comment, '1.jpg', '1.png', cur_date]
-        ];
-        con.query("INSERT INTO poll (name, email, animal_name, breed, country, comment, photo_path, thumbnail_path, date) VALUES ?", [poll_record], function (err, result, fields) {
-            // if any error while executing above query, throw error
-            if (err) throw err;
-            // if there is no error, you have the result
-            console.log(result);
-        });
+
+
+    //upload image file
+    if (!req.files){
+        console.log('No files were uploaded.');
+    }else {
+        console.log("file upload ");
+
+        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+        let photoFile = req.files.photoFile;
+        
+        if(photoFile != null){
+            photo_path = photoFile.name;
+            thumbnail_path = photoFile.name;
+
+            console.log("uploaded filename: " + photo_path);
+
+            // Use the mv() method to place the file somewhere on your server
+            photoFile.mv('public/uploads/images/'+photo_path, function (err) {
+
+                if (err)
+                    return res.status(500).send(err);
+
+            });
+        }
     }
-})
+
+    //save to database
+    var cur_date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+
+    var poll_record = [
+        [name, email, animal_name, breed, country, comment, photo_path, thumbnail_path, cur_date]
+    ];
+    connection.query("INSERT INTO poll (name, email, animal_name, breed, country, comment, photo_path, thumbnail_path, date) VALUES ?", [poll_record], function (err, result, fields) {
+        // if any error while executing above query, throw error
+        if (err) throw err;
+        
+        console.log("insert data success");
+    });
+
+    console.log("after add query run");
+
+    res.redirect('/show');
+
+});
 
 //get all people's poll data for second page
 router.get('/get_polls', (req, res) => {
@@ -126,7 +152,7 @@ router.get('/get_polls', (req, res) => {
     })
 
 
-})
+});
 
 //cron job for daily backup
 router.get('/json_backup', (req, res) => {
@@ -164,7 +190,9 @@ router.get('/json_backup', (req, res) => {
         }
 
         var json = JSON.stringify(obj);
-        fs.writeFile('public/cronjob/bubble/' + file_name, json, 'utf8', function callback() { });
+        fs.writeFile('public/cronjob/bubble/' + file_name, json, 'utf8', function callback() {
+            console.log("breed.json write success: " + file_name);
+        });
 
         res.end();
     });
@@ -196,7 +224,9 @@ router.get('/json_backup', (req, res) => {
 
         var json = JSON.stringify(obj);
 
-        fs.writeFile('public/cronjob/word/' + file_name, json, 'utf8', function callback() { });
+        fs.writeFile('public/cronjob/word/' + file_name, json, 'utf8', function callback() {
+            console.log("comment.json write success: " + file_name);
+         });
 
         res.end();
     });
@@ -230,8 +260,8 @@ router.get('/json_backup', (req, res) => {
             for (var i = 0; i < result_set.length; i++) {
                 var country_name = result_set[i]['country'];
 
-                for(var j = 0; j < country_json_data.length; j++){
-                    if(country_name == country_json_data[j]['name']){
+                for (var j = 0; j < country_json_data.length; j++) {
+                    if (country_name == country_json_data[j]['name']) {
                         country_json_data[j]['value'] = result_set[i]['size'];
                         obj.data.push(country_json_data[j]);
                     }
@@ -240,7 +270,9 @@ router.get('/json_backup', (req, res) => {
             }
 
             var json = JSON.stringify(obj);
-            fs.writeFile('public/cronjob/map/' + file_name, json, 'utf8', function callback() { });
+            fs.writeFile('public/cronjob/map/' + file_name, json, 'utf8', function callback() {
+                console.log("country.json write success: " + file_name);
+            });
 
             res.end();
 
@@ -248,7 +280,6 @@ router.get('/json_backup', (req, res) => {
 
     });
 
-})
-
+});
 
 module.exports = router;

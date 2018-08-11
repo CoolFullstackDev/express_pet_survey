@@ -2,7 +2,14 @@ extends layout.pug
 
 block append head
   script(src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js")
+  script(src="http://d3js.org/d3.v3.min.js")
+  script(src="https://www.amcharts.com/lib/3/ammap.js")
+  script(src="https://www.amcharts.com/lib/3/maps/js/worldLow.js")
+  script(src="https://www.amcharts.com/lib/3/plugins/export/export.min.js")
+  script(src="https://www.amcharts.com/lib/3/themes/light.js")
 
+  script(src='/js/map.js')
+  script(src='/js/cloud.js')
 block content
   .row
     img.col-md-12(src='/images/splash.jpg')
@@ -32,28 +39,30 @@ block content
       p.take_survey_subtitle.text-center The <i>Thank The Animals Census</i> is free to anyone.
       p.take_survey_subtitle.text-center Just fill in the questions below and click "Add My Response!"
       br
-      form(method="post", url="/add", enctype="multipart/formdata")
+      form(method="post", action="/add", encType="multipart/form-data")
         .row
           .row.col-md-6.md-xs-12
             .col-md-offset-3.col-md-8
               .row
                 p.form_label Your Name(or Pseudonym)
-                input.form_input(type="text", name="name")
+                input#form_name.form_input(type="text", name="username")
               br
               .row
                 .row.col-md-6
                   p.form_label Animal's Name
-                  input.form_input(type="text", name="animal")
+                  input.form_input(type="text", name="animal_name")
                   
                 .col-md-6
                   p.form_label Breed
-                  select.col-md-12.ui.search.dropdown(name="breed")
+                  input#breed_data(type="hidden", name="breed_data")
+                  select#breed_dropdown.col-md-12.ui.search.dropdown(name="breed")
                     each breed in breeds
                       option=breed
               br
               .row
                 p.form_label Country
-                select.col-md-12.ui.search.dropdown(name="country")
+                input#country_data(type="hidden", name="country_data")
+                select#country_dropdown.col-md-12.ui.search.dropdown(name="country")
                     each country in countries
                       option=country
           .col-md-6.md-xs-12
@@ -65,7 +74,7 @@ block content
             .row
               .col-md-offset-1.col-md-8
                 p.form_label Upload a photo of your animal-friend(optional)
-                input.form_input(type="file", name="photo")
+                input.form_input(type="file", name="photoFile")
         br
         br
         .row
