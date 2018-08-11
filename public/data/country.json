@@ -1,4 +1,8 @@
 {"data":[
+	{"code":"US" , "name":"United States", "value":313085380, "color":"#a7a737"},
+	{"code":"GB" , "name":"United Kingdom", "value":62417431, "color":"#d8854f"},
+	{"code":"CA" , "name":"Canada", "value":34349561, "color":"#a7a737"},
+
 	{"code":"AF" , "name":"Afghanistan", "value":32358260, "color":"#eea638"},
 	{"code":"AL" , "name":"Albania", "value":3215988, "color":"#d8854f"},
 	{"code":"DZ" , "name":"Algeria", "value":35980193, "color":"#de4c4f"},
@@ -24,7 +28,6 @@
 	{"code":"BI" , "name":"Burundi", "value":8575172, "color":"#de4c4f"},
 	{"code":"KH" , "name":"Cambodia", "value":14305183, "color":"#eea638"},
 	{"code":"CM" , "name":"Cameroon", "value":20030362, "color":"#de4c4f"},
-	{"code":"CA" , "name":"Canada", "value":34349561, "color":"#a7a737"},
 	{"code":"CV" , "name":"Cape Verde", "value":500585, "color":"#de4c4f"},
 	{"code":"CF" , "name":"Central African Rep.", "value":4486837, "color":"#de4c4f"},
 	{"code":"TD" , "name":"Chad", "value":11525496, "color":"#de4c4f"},
@@ -157,9 +160,7 @@
 	{"code":"TM" , "name":"Turkmenistan", "value":5105301, "color":"#eea638"},
 	{"code":"UG" , "name":"Uganda", "value":34509205, "color":"#de4c4f"},
 	{"code":"UA" , "name":"Ukraine", "value":45190180, "color":"#d8854f"},
-	{"code":"AE" , "name":"United Arab Emirates", "value":7890924, "color":"#eea638"},
-	{"code":"GB" , "name":"United Kingdom", "value":62417431, "color":"#d8854f"},
-	{"code":"US" , "name":"United States", "value":313085380, "color":"#a7a737"},
+	{"code":"AE" , "name":"United Arab Emirates", "value":7890924, "color":"#eea638"},	
 	{"code":"UY" , "name":"Uruguay", "value":3380008, "color":"#86a965"},
 	{"code":"UZ" , "name":"Uzbekistan", "value":27760267, "color":"#eea638"},
 	{"code":"VE" , "name":"Venezuela", "value":29436891, "color":"#86a965"},

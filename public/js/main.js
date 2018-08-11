@@ -1,8 +1,8 @@
 $(document).ready(function(){
 
   //show breed dropdown
-  console.log('------load---');
   $('.ui.dropdown').dropdown();
+
   // $('.ui.dropdown').dropdown({
   //   onChange: function (value, text, $selectedItem) {
   //     console.log(value);
@@ -13,6 +13,7 @@ $(document).ready(function(){
   //   on: "hover" 
   // });
 
+  
   //show bubble chart for breed
   breed_bubble();
 
@@ -43,7 +44,7 @@ $(document).ready(function(){
         .style("font", "12px sans-serif")
         .text("tooltip");
 
-    d3.json("http://localhost:3000/cronjob/bubble/2018-08-10.json", function(error, root) {
+    d3.json("http://localhost:3000/cronjob/bubble/2018-08-11.json", function(error, root) {
       var node = svg.selectAll(".node")
           .data(bubble.nodes(classes(root))
           .filter(function(d) { return !d.children; }))
@@ -89,7 +90,7 @@ $(document).ready(function(){
 
   //show word char for comment 
   
-  $.getJSON('http://localhost:3000/cronjob/word/2018-08-10.json', function (data) {
+  $.getJSON('http://localhost:3000/cronjob/word/2018-08-11.json', function (data) {
 
     var text_string = data['data'];
 

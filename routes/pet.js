@@ -9,33 +9,67 @@ const connection = mysql.createConnection({
     database: 'census'
 })
 
-// const bubble_data = require('public/data/bubble.json')
-
-
 //show simple first page
 router.get('/', (req, res) => {
-    res.render('first_no_vote', {
-        breeds: [
-            "Dog",
-            "Cat",
-            "Fish",
-            "Bird",
-            "Rabbit"
-        ]
-        
+
+    var fs = require('fs');
+
+    fs.readFile('public/data/breed.txt', 'utf8', function (err, data) {
+        if (err) throw err;
+
+        //get breeds from file
+        var breed_data = data.split(',');
+
+        //get countries from json file
+        fs.readFile('public/data/country.json', 'utf8', function (err, data) {
+            if (err) throw err;
+            var json_data = JSON.parse(data);
+            var country_json_data = json_data['data'];
+            var country_data = [];
+
+            for(var i = 0; i < country_json_data.length; i++){
+                country_data[i] = country_json_data[i]['name'];
+            }
+
+            //render to view
+            res.render('first_no_vote', {
+                breeds: breed_data,
+                countries: country_data
+            });
+        });
+
     });
+
 })
 
 //get json data and show census result
 router.get('/show', (req, res) => {
-    res.render('first_census_result', {
-        breeds: [
-            "Dog",
-            "Cat",
-            "Fish",
-            "Bird",
-            "Rabbit"
-        ]
+    var fs = require('fs');
+
+    fs.readFile('public/data/breed.txt', 'utf8', function (err, data) {
+        if (err) throw err;
+
+        //get breeds from file
+        var breed_data = data.split(',');
+
+        //get countries from json file
+        fs.readFile('public/data/country.json', 'utf8', function (err, data) {
+            if (err) throw err;
+            var json_data = JSON.parse(data);
+            var country_json_data = json_data['data'];
+            var country_data = [];
+
+            for(var i = 0; i < country_json_data.length; i++){
+                country_data[i] = country_json_data[i]['name'];
+            }
+
+            //render to view
+            res.render('first_census_result', {
+                breeds: breed_data,
+                countries: country_data
+            });
+        });
+
     });
 })
 
@@ -63,7 +97,7 @@ router.get('/add', (req, res) => {
             errors: errors
         });
     } else {
-        var cur_date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+        var cur_date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
 
         var poll_record = [
             [name, email, animal_name, breed, country, comment, '1.jpg', '1.png', cur_date]
@@ -79,7 +113,7 @@ router.get('/add', (req, res) => {
 
 //get all people's poll data for second page
 router.get('/get_polls', (req, res) => {
-    var cur_date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+    var cur_date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     console.log(cur_date);
 
     connection.query("SELECT * FROM poll", (err, rows, fields) => {
@@ -116,6 +150,8 @@ router.get('/json_backup', (req, res) => {
             res.end()
         }
 
+        console.log("breed cronjob");
+
         var fs = require('fs');
 
         var obj = {
@@ -141,6 +177,8 @@ router.get('/json_backup', (req, res) => {
             res.end()
         }
 
+        console.log("comment cronjob");
+
         var fs = require('fs');
 
         var obj = {
@@ -161,6 +199,53 @@ router.get('/json_backup', (req, res) => {
         fs.writeFile('public/cronjob/word/' + file_name, json, 'utf8', function callback() { });
 
         res.end();
+    });
+
+
+    //create map.json for participater's country
+    connection.query("SELECT country, count(country) as size FROM poll group by country", (err, rows, fields) => {
+        if (err) {
+            console.log(err)
+            res.end()
+        }
+
+        console.log("country cronjob");
+
+        var fs = require('fs');
+
+        var obj = {
+            data: []
+        };
+
+        var result_set = rows;
+
+        console.log(result_set);
+
+        fs.readFile('public/data/country.json', 'utf8', function (err, data) {
+            if (err) throw err;
+
+            var json_data = JSON.parse(data);
+            var country_json_data = json_data['data'];
+
+            for (var i = 0; i < result_set.length; i++) {
+                var country_name = result_set[i]['country'];
+
+                for(var j = 0; j < country_json_data.length; j++){
+                    if(country_name == country_json_data[j]['name']){
+                        country_json_data[j]['value'] = result_set[i]['size'];
+                        obj.data.push(country_json_data[j]);
+                    }
+                }
+
+            }
+
+            var json = JSON.stringify(obj);
+            fs.writeFile('public/cronjob/map/' + file_name, json, 'utf8', function callback() { });
+
+            res.end();
+
+        });
+
     });
 
 })

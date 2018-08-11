@@ -47,17 +47,18 @@ block content
                   
                 .col-md-6
                   p.form_label Breed
-                  select.ui.search.dropdown(name="breed")
+                  select.col-md-12.ui.search.dropdown(name="breed")
                     each breed in breeds
                       option=breed
-
               br
               .row
                 p.form_label Country
-                input.form_input(type="text", name="country")
+                select.col-md-12.ui.search.dropdown(name="country")
+                    each country in countries
+                      option=country
           .col-md-6.md-xs-12
             .row
-              .col-md-offset-1.col-md-8 //- script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+              .col-md-offset-1.col-md-8
                 p.form_label What do you want to thank your animal for?
                 textarea.form_input(name="comment", placeholder="(ie: companionship, love, wisdom, fun, playfulness, teachings, etc)")
             br
