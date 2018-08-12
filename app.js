@@ -4,10 +4,13 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const fileUpload = require('express-fileupload');
 
+// const expressThumbnail = require('express-thumbnail');
+
 // Init App
 const app = express();
 
 app.use(fileUpload());
+// app.use(expressThumbnail.register(__dirname + 'public/uploads/images'));
 
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));

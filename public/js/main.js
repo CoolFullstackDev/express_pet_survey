@@ -136,7 +136,7 @@ $(document).ready(function () {
       .attr("height", diameter)
       .attr("class", "bubble");
 
-    var tooltip = d3.select("body")
+    var tooltip = d3.select("#about_us")
       .append("div")
       .style("position", "absolute")
       .style("z-index", "10")
