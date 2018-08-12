@@ -46,32 +46,45 @@ router.get('/', (req, res) => {
 //get json data and show census result
 router.get('/show', (req, res) => {
     var fs = require('fs');
+    var latest_filename;
 
-    fs.readFile('public/data/breed.txt', 'utf8', function (err, data) {
-        if (err) throw err;
+    //get lastest file name
+    const cronjob_folder = 'public/cronjob/map/';
 
-        //get breeds from file
-        var breed_data = data.split(',');
+    fs.readdir(cronjob_folder, (err, files) => {
 
-        //get countries from json file
-        fs.readFile('public/data/country.json', 'utf8', function (err, data) {
+        latest_filename = files.sort()[files.length - 1];
+        console.log("latest filename: " + latest_filename);
+
+        fs.readFile('public/data/breed.txt', 'utf8', function (err, data) {
             if (err) throw err;
-            var json_data = JSON.parse(data);
-            var country_json_data = json_data['data'];
-            var country_data = [];
-
-            for (var i = 0; i < country_json_data.length; i++) {
-                country_data[i] = country_json_data[i]['name'];
-            }
-
-            //render to view
-            res.render('first_census_result', {
-                breeds: breed_data,
-                countries: country_data
+    
+            //get breeds from file
+            var breed_data = data.split(',');
+    
+            //get countries from json file
+            fs.readFile('public/data/country.json', 'utf8', function (err, data) {
+                if (err) throw err;
+                var json_data = JSON.parse(data);
+                var country_json_data = json_data['data'];
+                var country_data = [];
+    
+                for (var i = 0; i < country_json_data.length; i++) {
+                    country_data[i] = country_json_data[i]['name'];
+                }
+    
+                //render to view
+                res.render('first_census_result', {
+                    breeds: breed_data,
+                    countries: country_data,
+                    latest_filename: latest_filename
+                });
             });
+    
         });
-
+        
     });
+
 });
 
 
@@ -222,7 +235,7 @@ router.get('/json_backup', (req, res) => {
 
         for (var i = 0; i < rows.length; i++) {
             var str = rows[i]['comment'];
-            str.replace(/\r?\n|\r/g, ' ');
+            str = str.replace(/\n|\r/g, " ");
             comment_str += " " + str;
         }
         obj.data = comment_str;

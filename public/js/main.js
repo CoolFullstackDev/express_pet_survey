@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
   var name, animal_name, breed, country, comment, email;
+  var filename = $("#latest_filename").html();
+
+  console.log(filename);
 
   //init breed
   $("#breed_data").val($('#breed_dropdown').val());
@@ -111,7 +114,7 @@ $(document).ready(function () {
   $("#btn_email").click(function(){
     email = $("#email_input").val();
     $("#form_email").val(email);
-    
+
     $("form#add_survey").submit();
   });
 
@@ -145,7 +148,7 @@ $(document).ready(function () {
       .style("font", "12px sans-serif")
       .text("tooltip");
 
-    d3.json("http://localhost:3000/cronjob/bubble/2018-08-12.json", function (error, root) {
+    d3.json("./cronjob/bubble/" + filename, function (error, root) {
       var node = svg.selectAll(".node")
         .data(bubble.nodes(classes(root))
           .filter(function (d) { return !d.children; }))
@@ -191,9 +194,11 @@ $(document).ready(function () {
 
   //show word char for comment 
 
-  $.getJSON('http://localhost:3000/cronjob/word/2018-08-12.json', function (data) {
+  $.getJSON('./cronjob/word/' + filename, function (data) {
 
     var text_string = data['data'];
+
+    console.log("comment: '" + text_string + "'");
 
     drawWordCloud(text_string);
 

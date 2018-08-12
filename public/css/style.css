@@ -295,6 +295,9 @@ img.question_area.reverse_image{
   font-size: 35px;
 }
 
+#latest_filename{
+  display: none;
+}
 
 /* email modal style */
 

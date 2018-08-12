@@ -1,5 +1,5 @@
 (function () {
-    function show_map() {
+    function show_map(filename) {
         var latlong = {};
         latlong["AD"] = { "latitude": 42.5, "longitude": 1.5 };
         latlong["AE"] = { "latitude": 24, "longitude": 54 };
@@ -244,7 +244,7 @@
 
         console.log("in map.js, before json parsing");
 
-        $.getJSON('http://localhost:3000/cronjob/map/2018-08-12.json', function (data) {
+        $.getJSON('./cronjob/map/' + filename, function (data) {
 
             var mapData = data['data'];
 
@@ -313,5 +313,9 @@
 
     }
 
-    show_map();
+    $(document).ready(function(){
+        var filename = $("#latest_filename").html();
+        show_map(filename);
+    });
+    
 })();
