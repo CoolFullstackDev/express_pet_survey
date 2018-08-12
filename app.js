@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const fileUpload = require('express-fileupload');
+const paginate = require('express-paginate');
 
 // const expressThumbnail = require('express-thumbnail');
 
@@ -10,6 +11,7 @@ const fileUpload = require('express-fileupload');
 const app = express();
 
 app.use(fileUpload());
+app.use(paginate.middleware(20, 50));
 // app.use(expressThumbnail.register(__dirname + 'public/uploads/images'));
 
 // Load View Engine

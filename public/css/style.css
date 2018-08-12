@@ -315,6 +315,61 @@ img.question_area.reverse_image{
 
 /* second page style */
 
-#second_page_wrapper{
-  color: 
+#census_result.second_page{
+  padding-top: 50px;
+}
+
+#second_page_title{
+  font-size: 45px;
+}
+
+/* Sortable tables */
+
+#table_detail{
+  background: white;
+}
+
+thead th {
+  cursor: pointer;
+  background-color:#eee;
+  color:#666666;
+  font-weight: bold;
+}
+
+.col_no{
+  width: 50px;
+}
+
+.col_name{
+  width: 130px;
+}
+
+.col_animal{
+  width: 100px;
+}
+
+.col_breed{
+  width: 130px;
+}
+
+.col_country{
+  width: 100px;
+}
+
+.col_comment{
+  width: 250px;
+}
+
+.col_photo{
+  width: 70px;
+  height: 50px;
+}
+
+.col_date{
+  width: 80px;
+}
+
+.img_table{
+  width: 70px;
+  height: 50px;
 }

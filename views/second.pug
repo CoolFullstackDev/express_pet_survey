@@ -4,46 +4,65 @@ block append head
   script(src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js")
 
 block content
-  #census_result
-    p#second_page_title CENSUS RESULTS - INDIVIDUAL RESPONSES
-    .row
-      table.sortable
-        thead
-          tr
-            th Number
-            th Name / Pseudonym
-            th Animal's Name
-            th Species / Breed
-            th Country
-            th What do you want to thank you animal for?
-            th Photo
-            th Date
-        tbody
-          tr
-            td 1
-            td Dorian
-            td Snow
-            td Dog - Samoyed
-            td USA
-            td I want to thank Snow for his loyalty, pure love, playfulness and the way he would know things.
-            td img(src="")
-            td 2018/08/07
-          tr
-            td 2
-            td Aorian
-            td now
-            td Samoyed
-            td SA
-            td want to thank Snow for his loyalty, pure love, playfulness and the way he would know things.
-            td img(src="")
-            td 2018/08/10
-          tr
-            td 3
-            td orian
-            td ow
-            td og - Samoyed
-            td Canada
-            td nt to thank Snow for his loyalty, pure love, playfulness and the way he would know things.
-            td img(src="")
-            td 2017/12/15
+  #census_result.second_page
+    p#second_page_title.text-center CENSUS RESULTS - INDIVIDUAL RESPONSES
+    .container-fluid
+      .row
+        table#table_detail.sortable.table.table-bordered.table-hover
+          thead
+            tr
+              th.col_no.text-center Number
+              th.col_name Name / Pseudonym
+              th.col_animal Animal's Name
+              th.col_breed Species / Breed
+              th.col_country Country
+              th.col_comment What do you want to thank you animal for?
+              th.col_photo Photo
+              th.col_date Date
+          tbody
+            - var i = 0;
+            each row in rows
+              - i++;
+              - var path = "./uploads/images/" + row['photo_path']
+              tr
+                td.text-center #{i}
+                td #{row['name']}
+                td #{row['animal_name']}
+                td #{row['breed']}
+                td #{row['country']}
+                td #{row['comment']}
+                td <img class="img_table" src = #{path} />
+                td #{row['date']}
+      
+      #pagination_area.row
+      if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
+        .navigation.well-sm#pagination
+          ul.pager
+            if paginate.hasPreviousPages
+              li.previous
+                a(href=paginate.href(true)).prev
+                  i.fa.fa-arrow-circle-left
+                  |  Previous
+            else
+              li.previous.disabled
+                a(href="#").prev
+                  i.fa.fa-arrow-circle-left
+                  |  Previous
+            if pages
+              each page in pages
+                if(currentPage == page.number)
+                  a.btn.btn-default.active(href=page.url)= page.number
+                else
+                  a.btn.btn-default(href=page.url)= page.number
+            if paginate.hasNextPages(pageCount)
+              li.next
+                a(href=paginate.href()).next
+                  | Next&nbsp;
+                  i.fa.fa-arrow-circle-right
+            else
+              li.next.disabled
+                a(href="#").next
+                  | Next&nbsp;
+                  i.fa.fa-arrow-circle-right
+
       

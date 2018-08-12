@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const path = require('path')
+const paginate = require('express-paginate');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -90,7 +91,6 @@ router.get('/show', (req, res) => {
 
 //get json data and show census result
 router.post('/add', function (req, res) {
-
 
     let name = req.body.username;
     let email = req.body.email;
@@ -217,24 +217,6 @@ router.post('/add', function (req, res) {
 //         });
 
 // });
-
-
-//get all people's poll data for second page
-router.get('/get_polls', (req, res) => {
-    var cur_date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
-    console.log(cur_date);
-
-    connection.query("SELECT * FROM poll", (err, rows, fields) => {
-        if (err) {
-            console.log(err)
-            res.end()
-        }
-
-        res.json(rows)
-    })
-
-
-});
 
 //cron job for daily backup
 router.get('/json_backup', (req, res) => {
@@ -368,57 +350,41 @@ router.get('/json_backup', (req, res) => {
 //get database data and show second detail page
 router.get('/detail', (req, res) => {
 
-    // connection.query("SELECT country, count(country) as size FROM poll group by country", (err, rows, fields) => {
-    //     if (err) {
-    //         console.log(err)
-    //         res.end()
-    //     }
+    req.query.limit;
 
-    //     console.log("country cronjob");
+    if(req.params.start_num == null)
+        var start_num = 0;
+    else
+        var start_num = req.params.start_num;
 
-    //     var fs = require('fs');
+    connection.query("SELECT count(*) as num_rows from poll", (err, rows, fileds) => {
+        
+        var num_rows = rows[0]['num_rows'];
 
-    //     var obj = {
-    //         data: []
-    //     };
+        console.log("-----------------------" + req.skip);
 
-    //     var result_set = rows;
+        connection.query("SELECT * FROM poll ORDER BY date DESC LIMIT " + req.skip + ", " + req.query.limit, (err, results, fields) => {
+            if (err) {
+                console.log(err)
+                res.end()
+            }
+    
+            const itemCount = results.length;
+            const pageCount = Math.ceil(num_rows / req.query.limit);
+            const currentPage = req.query.page;
 
-    //     console.log(result_set);
-
-    //     fs.readFile('public/data/country.json', 'utf8', function (err, data) {
-    //         if (err) throw err;
-
-    //         var json_data = JSON.parse(data);
-    //         var country_json_data = json_data['data'];
-
-    //         for (var i = 0; i < result_set.length; i++) {
-    //             var country_name = result_set[i]['country'];
-
-    //             for (var j = 0; j < country_json_data.length; j++) {
-    //                 if (country_name == country_json_data[j]['name']) {
-    //                     country_json_data[j]['value'] = result_set[i]['size'];
-    //                     obj.data.push(country_json_data[j]);
-    //                 }
-    //             }
-
-    //         }
-
-    //         var json = JSON.stringify(obj);
-    //         fs.writeFile('public/cronjob/map/' + file_name, json, 'utf8', function callback() {
-    //             console.log("country.json write success: " + file_name);
-    //         });
-
-    //         res.end();
-
-    //     });
-
-    // });
-
-    //render to view
-    res.render('second', {
-        title: "Individual page"
+            //render to view
+            res.render('second', {
+                rows: results,
+                pageCount,
+                itemCount,
+                currentPage,
+                pages: paginate.getArrayPages(req)(5, pageCount, req.query.page)
+            });
+    
+        });
     });
+    
 
 });
 

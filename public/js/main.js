@@ -5,6 +5,15 @@ $(document).ready(function () {
 
   console.log(filename);
 
+
+  $(".disabled").click(function(){
+    e.stopImmediatePropagation();
+    return false;
+  });
+
+  //sortable table init
+  sorttable.makeSortable($(".sortable"));
+
   //init breed
   $("#breed_data").val($('#breed_dropdown').val());
 
