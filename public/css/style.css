@@ -1,14 +1,41 @@
-/* error style */
-.alert-error{
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
+/* semantic alert style */
+.ui-alert-content{
+  position: fixed;
+  width: 360px;
+  z-index: 2060;
 }
-
-.alert-success_msg{
-  color: #3c763d;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
+.ui-alert-content-top-right{
+  top: 20px;
+  right: 20px;
+}
+.ui-alert-content-top-center{
+  top: 20px;
+  margin: 0 0 0 -180px;
+  left: 50%;
+}
+.ui-alert-content-top-left{
+  top: 20px;
+  left: 20px;
+}
+.ui-alert-content-bottom-right{
+  bottom: 0;
+  right: 20px;
+}
+.ui-alert-content-bottom-center{
+  bottom: 0;
+  margin: 0 0 0 -180px;
+  left: 50%;
+}
+.ui-alert-content-bottom-left{
+  bottom: 0;
+  left: 20px;
+}
+.ui-alert {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.ui-alert p{
+  display: table;
 }
 
 /* census result svg style */
@@ -103,7 +130,7 @@ p#invitation_title{
   font-size: 25px;
 }
 
-#btn_submit{
+#btn_submit, #btn_email{
   background: #af1a06;
   color: white;
   font-size: 30px;
@@ -269,3 +296,15 @@ img.question_area.reverse_image{
 }
 
 
+/* email modal style */
+
+#modal_email{
+  background: #302513;
+  border: 2px solid white;
+  height: 500px;
+  color: white;
+}
+
+#email_input{
+  color: black;
+}

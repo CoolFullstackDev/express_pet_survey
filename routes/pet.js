@@ -79,8 +79,7 @@ router.get('/show', (req, res) => {
 router.post('/add', function (req, res) {
 
     let name = req.body.username;
-    // let email = req.body.email;
-    let email = "a@b.com";
+    let email = req.body.email;
     let animal_name = req.body.animal_name;
     let breed = req.body.breed_data;
     let country = req.body.country_data;
@@ -88,10 +87,16 @@ router.post('/add', function (req, res) {
     let photo_path = "";
     let thumbnail_path = "";
 
+    if(email != ""){
+        req.checkBody('email', 'Email is not valid').isEmail();
+        let errors = req.validationErrors();
+        if(errors){
+            email = "";
+            console.log("email is not valid");
+        }
+    }
 
-    console.log("name: " + name + ", animal: " + animal_name + ", breed: " + breed + ", country: " + country + ", comment: " + comment);
-
-
+    console.log("name: " + name + ", animal: " + animal_name + ", breed: " + breed + ", email: " + email + ", country: " + country + ", comment: " + comment);
 
     //upload image file
     if (!req.files){
@@ -218,7 +223,7 @@ router.get('/json_backup', (req, res) => {
         for (var i = 0; i < rows.length; i++) {
             var str = rows[i]['comment'];
             str.replace(/\r?\n|\r/g, ' ');
-            comment_str += str;
+            comment_str += " " + str;
         }
         obj.data = comment_str;
 
