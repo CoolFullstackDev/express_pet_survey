@@ -6,6 +6,8 @@ const fileUpload = require('express-fileupload');
 const paginate = require('express-paginate');
 const CronJob = require('cron').CronJob;
 
+require('dotenv').config();
+
 // const sass = require('node-sass');
 // const expressThumbnail = require('express-thumbnail');
 

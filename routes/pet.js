@@ -7,12 +7,8 @@ const Mailchimp = require('mailchimp-api-v3');
 
 var utility = require('../utility/functions');
 
-//mailchimp config
-var mailchimpInstance   = 'us19',
-listUniqueId        = '96cead5a06',
-mailchimpApiKey     = 'f056d0a0cbc6d5d67f5f3a824eae0caa-us19';
 
-var mailchimp = new Mailchimp(mailchimpApiKey);
+var mailchimp = new Mailchimp(process.env.MAILCHIMP_API_KEY);
 
 //mysql db connection
 const connection = mysql.createConnection({
@@ -27,7 +23,7 @@ function verifyEmail(volunteer_name, volunteer_email){
 
     console.log("mailchimp service start");
 
-    mailchimp.post('/lists/'+listUniqueId+'/members', {
+    mailchimp.post('/lists/'+process.env.MAILCHIMP_LIST_UID+'/members', {
         email_address : volunteer_email,
         status : 'subscribed',
         'merge_fields': {
@@ -40,6 +36,18 @@ function verifyEmail(volunteer_name, volunteer_email){
       .catch(function (err) {
         console.log('email register fail');
       });
+
+
+    //   var options = {
+    //     host: 'us11.api.mailchimp.com',
+    //     path: '/3.0/lists/<myListID>/members',
+    //     method: 'POST',
+    //     headers: {
+    //         'Authorization': 'randomUser myApiKey',
+    //         'Content-Type': 'application/json',
+    //         'Content-Length': subscriber.length
+    //     }
+    }
 
 }
 
