@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const fileUpload = require('express-fileupload');
 const paginate = require('express-paginate');
-// const sass = require('node-sass');
+const CronJob = require('cron').CronJob;
 
+// const sass = require('node-sass');
 // const expressThumbnail = require('express-thumbnail');
 
 // Init App
@@ -13,9 +14,10 @@ const app = express();
 
 app.use(fileUpload());
 app.use(paginate.middleware(20, 50));
+
 // app.use(expressThumbnail.register(__dirname + 'public/uploads/images'));
 
-// add sass middleware
+// // add sass middleware
 // app.use(
 //   sass.middleware({
 //       src: __dirname + '/public/sass', 
@@ -65,9 +67,20 @@ app.use(expressValidator({
   }
 }));
 
-
 var router = require('./routes/pet')
 app.use('/', router)
+
+var utility = require('./utility/functions');
+
+// cronjob for json backup
+new CronJob('00 00 23 * * *', function() {
+    
+  // Execute code here
+  console.log('Cronjob started!');
+  
+  utility.svg_cron();
+
+}, null, true, 'America/Los_Angeles');
 
 // Start Server
 app.listen(3000, function(){
