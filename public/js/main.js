@@ -128,7 +128,7 @@ $(document).ready(function () {
   breed_bubble();
 
   function breed_bubble() {
-    var diameter = 600,
+    var diameter = parseInt($("#breed_bubble").css("width")),
       format = d3.format(",d"),
       color = d3.scale.category20c();
 
@@ -232,8 +232,9 @@ $(document).ready(function () {
       }
 
       var svg_location = "#word_chart";
-      var width = 600;
-      var height = 500;
+
+      var width = parseInt($("#word_chart").css("width"));
+      var height = parseInt($("#word_chart").css("height"));
 
       var fill = d3.scale.category20();
 

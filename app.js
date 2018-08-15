@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const fileUpload = require('express-fileupload');
 const paginate = require('express-paginate');
+// const sass = require('node-sass');
 
 // const expressThumbnail = require('express-thumbnail');
 
@@ -13,6 +14,16 @@ const app = express();
 app.use(fileUpload());
 app.use(paginate.middleware(20, 50));
 // app.use(expressThumbnail.register(__dirname + 'public/uploads/images'));
+
+// add sass middleware
+// app.use(
+//   sass.middleware({
+//       src: __dirname + '/public/sass', 
+//       dest: __dirname + '/public/stylesheets',
+//       prefix:  '/stylesheets',
+//       debug: true,         
+//   })
+// );
 
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +35,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 app.use(bodyParser.json({limit: '50mb'}));
-
 
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')));

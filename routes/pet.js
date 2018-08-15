@@ -4,6 +4,14 @@ const mysql = require('mysql');
 const path = require('path')
 const paginate = require('express-paginate');
 const request = require('superagent');
+const Mailchimp = require('mailchimp-api-v3')
+
+//mailchimp config
+var mailchimpInstance   = 'us19',
+listUniqueId        = '96cead5a06',
+mailchimpApiKey     = 'f056d0a0cbc6d5d67f5f3a824eae0caa-us19';
+
+var mailchimp = new Mailchimp(mailchimpApiKey);
 
 //mysql db connection
 const connection = mysql.createConnection({
@@ -14,32 +22,52 @@ const connection = mysql.createConnection({
 });
 
 //email verify using mailchimp
+// function verifyEmail(volunteer_name, volunteer_email){
+
+//     console.log("mailchimp service start");
+
+//     var mailchimpInstance   = 'us19',
+//     listUniqueId        = '96cead5a06',
+//     mailchimpApiKey     = 'e6e0ccc7f71b3b127511dbc508dd4bd0-us19';
+
+//     request
+//         .post('https://' + mailchimpInstance + '.api.mailchimp.com/3.0/lists/' + listUniqueId + '/members/')
+//         .set('Content-Type', 'application/json;charset=utf-8')
+//         .set('Authorization', 'Basic ' + new Buffer('any:' + mailchimpApiKey ).toString('base64'))
+//         .send({
+//           'email_address': volunteer_email,
+//           'status': 'subscribed',
+//           'merge_fields': {
+//             'FNAME': volunteer_name
+//           }
+//         })
+//         .end(function(err, response) {
+//             if (response.status < 300 || (response.status === 400 && response.body.title === "Member Exists")) {
+//                 console.log('sign success');
+//             } else {
+//                 console.log('sign fail');
+//             }
+//         });
+
+// }
+
 function verifyEmail(volunteer_name, volunteer_email){
 
     console.log("mailchimp service start");
 
-    var mailchimpInstance   = 'us19',
-    listUniqueId        = '96cead5a06',
-    mailchimpApiKey     = 'e6e0ccc7f71b3b127511dbc508dd4bd0-us19';
-
-    request
-        .post('https://' + mailchimpInstance + '.api.mailchimp.com/3.0/lists/' + listUniqueId + '/members/')
-        .set('Content-Type', 'application/json;charset=utf-8')
-        .set('Authorization', 'Basic ' + new Buffer('any:' + mailchimpApiKey ).toString('base64'))
-        .send({
-          'email_address': volunteer_email,
-          'status': 'subscribed',
-          'merge_fields': {
+    mailchimp.post('/lists/'+listUniqueId+'/members', {
+        email_address : volunteer_email,
+        status : 'subscribed',
+        'merge_fields': {
             'FNAME': volunteer_name
-          }
-        })
-        .end(function(err, response) {
-            if (response.status < 300 || (response.status === 400 && response.body.title === "Member Exists")) {
-                console.log('sign success');
-            } else {
-                console.log('sign fail');
-            }
-        });
+        }
+      })
+      .then(function(results) {
+        console.log('email register success');
+      })
+      .catch(function (err) {
+        console.log('email register fail');
+      });
 
 }
 
