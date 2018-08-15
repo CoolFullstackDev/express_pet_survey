@@ -47,7 +47,7 @@ function verifyEmail(volunteer_name, volunteer_email){
     //         'Content-Type': 'application/json',
     //         'Content-Length': subscriber.length
     //     }
-    }
+    // }
 
 }
 
