@@ -2,7 +2,10 @@ extends layout.pug
 
 block append head
   script(src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js")
-
+  script(type='text/javascript').
+    $(document).ready(function(){
+    sorttable.makeSortable($(".sortable"));
+    });
 block content
   #census_result.second_page
     p#second_page_title.text-center CENSUS RESULTS - INDIVIDUAL RESPONSES

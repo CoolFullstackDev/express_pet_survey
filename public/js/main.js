@@ -11,9 +11,6 @@ $(document).ready(function () {
     return false;
   });
 
-  //sortable table init
-  sorttable.makeSortable($(".sortable"));
-
   //init breed
   $("#breed_data").val($('#breed_dropdown').val());
 

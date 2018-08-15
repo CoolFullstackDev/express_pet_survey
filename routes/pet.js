@@ -3,13 +3,46 @@ const router = express.Router();
 const mysql = require('mysql');
 const path = require('path')
 const paginate = require('express-paginate');
+const request = require('superagent');
 
+//mysql db connection
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '123',
     database: 'census'
 });
+
+//email verify using mailchimp
+function verifyEmail(volunteer_name, volunteer_email){
+
+    console.log("mailchimp service start");
+
+    var mailchimpInstance   = 'us19',
+    listUniqueId        = '96cead5a06',
+    mailchimpApiKey     = 'e6e0ccc7f71b3b127511dbc508dd4bd0-us19';
+
+    request
+        .post('https://' + mailchimpInstance + '.api.mailchimp.com/3.0/lists/' + listUniqueId + '/members/')
+        .set('Content-Type', 'application/json;charset=utf-8')
+        .set('Authorization', 'Basic ' + new Buffer('any:' + mailchimpApiKey ).toString('base64'))
+        .send({
+          'email_address': volunteer_email,
+          'status': 'subscribed',
+          'merge_fields': {
+            'FNAME': volunteer_name
+          }
+        })
+        .end(function(err, response) {
+            if (response.status < 300 || (response.status === 400 && response.body.title === "Member Exists")) {
+                console.log('sign success');
+            } else {
+                console.log('sign fail');
+            }
+        });
+
+}
+
 
 //show simple first page
 router.get('/', (req, res) => {
@@ -149,8 +182,6 @@ router.post('/add', function (req, res) {
                 });
             }
 
-
-
         }
     }
 
@@ -167,8 +198,12 @@ router.post('/add', function (req, res) {
         console.log("insert data success");
     });
 
-    console.log("after add query run");
+    if(email != ""){
+        //email verification using mailchimp
+        verifyEmail(name, email);
+    }
 
+    //show view page
     res.redirect('/show');
 
 });
