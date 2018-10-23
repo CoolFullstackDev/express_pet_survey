@@ -1,18 +1,16 @@
-# Article Knowledgebase Application
+# Pet Animal Survey Application
 
-This is a knowledgebase app used in the "Node.js & Express From Scratch" Youtube series.
 
 ## Technologies
 * Node.js
 * Express
 * Express Messages, Session, Connect Flash & Validation
-* MongoDB & Mongoose
+* Mysql
 * Pug Templating
-* Passport.js Authentication
 * BCrypt Hashing
 
 ### Version
-2.0.0
+1.0.0
 
 ## Usage
 
@@ -29,4 +27,4 @@ Run app
 ```sh
 $ npm start
 ```
-# express_pet_survey
+
